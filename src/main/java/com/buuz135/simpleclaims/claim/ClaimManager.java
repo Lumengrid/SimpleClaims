@@ -2,6 +2,8 @@ package com.buuz135.simpleclaims.claim;
 
 import com.buuz135.simpleclaims.Main;
 import com.buuz135.simpleclaims.claim.party.PartyInvite;
+import com.buuz135.simpleclaims.claim.party.PartyOverride;
+import com.buuz135.simpleclaims.claim.party.PartyOverrides;
 import com.buuz135.simpleclaims.commands.CommandMessages;
 import com.buuz135.simpleclaims.files.*;
 import com.buuz135.simpleclaims.util.FileUtils;
@@ -123,7 +125,8 @@ public class ClaimManager {
 
         logger.at(Level.INFO).log("Loading reserved chunks data from DB...");
         this.reservedChunks.putAll(this.databaseManager.loadReservedChunks());
-
+      
+        migrateOldClaimOverrides();
     }
 
     public void saveParty(PartyInfo partyInfo) {
@@ -479,6 +482,50 @@ public class ClaimManager {
         for (PartyInfo party : toDisband) {
             logger.at(Level.INFO).log("Disbanding inactive party: " + party.getName() + " (" + party.getId() + ")");
             disbandParty(party);
+        }
+    }
+
+    public void migrateOldClaimOverrides() {
+        if (!Main.CONFIG.get().isMigrateOldClaimOverrides()) {
+            return;
+        }
+        
+        logger.at(Level.INFO).log("Checking for old claim overrides to migrate...");
+        int migratedCount = 0;
+        
+        for (PartyInfo party : this.parties.values()) {
+            var oldOverride = party.getOverride(PartyOverrides.CLAIM_CHUNK_AMOUNT);
+            if (oldOverride != null) {
+                int oldValue = (Integer) oldOverride.getValue().getTypedValue();
+                int configDefault = Main.CONFIG.get().getDefaultPartyClaimsAmount();
+                
+                if (oldValue != configDefault) {
+                    // Split into base + bonus
+                    if (oldValue > configDefault) {
+                        // Assume extra is earned bonuses
+                        int bonus = oldValue - configDefault;
+                        party.setOverride(new PartyOverride(PartyOverrides.BONUS_CLAIM_CHUNKS, 
+                            new PartyOverride.PartyOverrideValue("integer", bonus)));
+                        logger.at(Level.INFO).log("Migrated party " + party.getName() + ": base=" + configDefault + ", bonus=" + bonus);
+                    } else {
+                        // Admin had lowered it - treat as base override
+                        party.setOverride(new PartyOverride(PartyOverrides.CLAIM_CHUNK_BASE, 
+                            new PartyOverride.PartyOverrideValue("integer", oldValue)));
+                        logger.at(Level.INFO).log("Migrated party " + party.getName() + ": custom base=" + oldValue);
+                    }
+                }
+                
+                // Remove old override
+                party.removeOverride(PartyOverrides.CLAIM_CHUNK_AMOUNT);
+                saveParty(party);
+                migratedCount++;
+            }
+        }
+        
+        if (migratedCount > 0) {
+            logger.at(Level.INFO).log("Successfully migrated " + migratedCount + " parties to new claim system");
+        } else {
+            logger.at(Level.INFO).log("No parties needed migration");
         }
     }
 

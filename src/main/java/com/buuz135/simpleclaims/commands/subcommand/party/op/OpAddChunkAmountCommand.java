@@ -1,11 +1,9 @@
 package com.buuz135.simpleclaims.commands.subcommand.party.op;
 
-import com.buuz135.simpleclaims.Main;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.party.PartyOverride;
 import com.buuz135.simpleclaims.claim.party.PartyOverrides;
 import com.buuz135.simpleclaims.commands.CommandMessages;
-import com.buuz135.simpleclaims.util.Permissions;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
@@ -44,16 +42,16 @@ public class OpAddChunkAmountCommand extends AbstractAsyncCommand {
             sender.sendMessage(CommandMessages.PARTY_NOT_FOUND);
             return CompletableFuture.completedFuture(null);
         }
-        var maxAmount = Main.CONFIG.get().getMaxAddChunkAmount();
-        var permissionAmount = Permissions.getPermissionMaxAddChunkAmount(uuidSelectedPlayer);
-        if (permissionAmount > maxAmount) maxAmount = permissionAmount;
+        
+        int currentBonuses = party.getBonusChunks();
+        int maxBonusLimit = party.getMaxBonusLimit();
 
-        if (party.getMaxClaimAmount() + selectedAmount > maxAmount) {
-            sender.sendMessage(CommandMessages.MAX_ADD_CHUNK_REACHED.param("limit", maxAmount));
+        if (currentBonuses + selectedAmount > maxBonusLimit) {
+            sender.sendMessage(CommandMessages.MAX_ADD_CHUNK_REACHED.param("limit", maxBonusLimit));
             return CompletableFuture.completedFuture(null);
         }
 
-        party.setOverride(new PartyOverride(PartyOverrides.CLAIM_CHUNK_AMOUNT, new PartyOverride.PartyOverrideValue("integer", party.getMaxClaimAmount() + selectedAmount)));
+        party.setOverride(new PartyOverride(PartyOverrides.BONUS_CLAIM_CHUNKS, new PartyOverride.PartyOverrideValue("integer", currentBonuses + selectedAmount)));
         ClaimManager.getInstance().saveParty(party);
         sender.sendMessage(CommandMessages.MODIFIED_MAX_CHUNK_AMOUNT.param("party_name", party.getName()).param("amount", party.getMaxClaimAmount()));
         return CompletableFuture.completedFuture(null);

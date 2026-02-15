@@ -54,9 +54,9 @@ public class OpModifyChunkAmountCommand extends AbstractAsyncCommand {
                             return;
                         }
                         var selectedAmount = amount.get(commandContext);
-                        party.setOverride(new PartyOverride(PartyOverrides.CLAIM_CHUNK_AMOUNT, new PartyOverride.PartyOverrideValue("integer", selectedAmount)));
+                        party.setOverride(new PartyOverride(PartyOverrides.CLAIM_CHUNK_BASE, new PartyOverride.PartyOverrideValue("integer", selectedAmount)));
                         ClaimManager.getInstance().saveParty(party);
-                        player.sendMessage(CommandMessages.MODIFIED_MAX_CHUNK_AMOUNT.param("party_name", party.getName()).param("amount", selectedAmount));
+                        player.sendMessage(CommandMessages.MODIFIED_MAX_CHUNK_AMOUNT.param("party_name", party.getName()).param("amount", party.getMaxClaimAmount()));
                     }
                 }, world);
             } else {

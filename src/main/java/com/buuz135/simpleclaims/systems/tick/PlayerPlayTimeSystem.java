@@ -33,7 +33,7 @@ public class PlayerPlayTimeSystem extends DelayedEntitySystem<EntityStore> {
         UUID uuid = playerRef.getUuid();
 
         var party = ClaimManager.getInstance().getPartyFromPlayer(uuid);
-        if (party == null || !party.isOwner(uuid)) return;
+        if (party == null) return; // Changed: all members can earn bonuses, not just owner
 
         int gainMinutes = Main.CONFIG.get().getClaimChunkGainInMinutes();
         int permissionGainMinutes = Permissions.getPermissionClaimChunkGainMinutes(uuid);
@@ -49,14 +49,14 @@ public class PlayerPlayTimeSystem extends DelayedEntitySystem<EntityStore> {
         while (currentTime >= targetSeconds) {
             currentTime -= targetSeconds;
 
-            int currentMax = party.getMaxClaimAmount();
-            int maxGain = Main.CONFIG.get().getMaxAddChunkAmount();
+            int currentBonuses = party.getBonusChunks();
+            int maxBonusLimit = party.getMaxBonusLimit();
 
-            if (currentMax < maxGain) {
-                party.setOverride(new PartyOverride(PartyOverrides.CLAIM_CHUNK_AMOUNT, new PartyOverride.PartyOverrideValue("integer", currentMax + 1)));
+            if (currentBonuses < maxBonusLimit) {
+                party.setOverride(new PartyOverride(PartyOverrides.BONUS_CLAIM_CHUNKS, new PartyOverride.PartyOverrideValue("integer", currentBonuses + 1)));
                 ClaimManager.getInstance().saveParty(party);
             } else {
-                break; // reached max gain, no point in continuing the loop
+                break; // reached max bonus limit, no point in continuing the loop
             }
         }
         ClaimManager.getInstance().setPlayerPlayTime(uuid, currentTime);

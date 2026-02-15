@@ -7,6 +7,8 @@ This document explains all the configuration options available in the `SimpleCla
 These settings define the initial permissions and limits for newly created parties.
 
 - **DefaultPartyClaimsAmount** (Integer, Default: `25`): The maximum number of chunks a party can claim by default.
+- **ScaleClaimLimitByMembers** (Boolean, Default: `true`): If `true`, the maximum number of chunks a party can claim
+  will be scaled by the number of members in the party.
 - **MaxAddChunkAmount** (Integer, Default: `100`): The maximum amount of chunks a party can have when using the
   `add-chunk-amount` command or gain by playtime.
 - **ClaimChunkGainInMinutes** (Integer, Default: `-1`): How often (in minutes) a player will gain another claim chunk by
@@ -63,6 +65,14 @@ These settings control whether party owners are allowed to change specific permi
 - **AllowPartyInteractPortalSettingChanges** (Boolean, Default: `true`): If `true`, party owners can toggle portal
   interaction permissions.
 
+## Command Settings
+
+These settings define the aliases for the main commands of the mod.
+
+- **PartyCommandAliases** (String Array, Default: `["scp", "sc-party", "party"]`): The aliases for the party command.
+- **ClaimCommandAliases** (String Array, Default: `["sc", "sc-chunks", "scc", "chunk", "chunks", "claim", "claims"]`):
+  The aliases for the claim command.
+
 ## World & Protection Settings
 
 Global settings that affect claiming and protection across the server.
@@ -107,3 +117,5 @@ Use these with caution as they might still be in development.
   is a workaround for Hytale's interaction bugs.
 - **EXPERIMENTAL-RenderMapInClaimUI** (Boolean, Default: `true`): If `true`, renders a map showing claimed chunks inside
   the claiming GUI.
+- **MIGRATION-MigrateOldClaimOverrides** (Boolean, Default: `true`): One-time migration: converts old
+  `CLAIM_CHUNK_AMOUNT` to new base+bonus system.

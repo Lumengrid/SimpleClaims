@@ -1,0 +1,56 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "HytaleServer",
+            "request": "launch",
+            "mainClass": "com.hypixel.hytale.Main",
+            "projectName": "SimpleClaims",
+            "cwd": "${workspaceFolder}/run",
+            "args": "--allow-op --disable-sentry --assets=${env:HOME}/.local/share/Hytale/install/release/package/game/latest/Assets.zip --mods=${workspaceFolder}/src/main --auth-mode=authenticated",
+            "vmArgs": "",
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.vscode/.env"
+        },
+        {
+            "type": "java",
+            "name": "HytaleServer (Windows)",
+            "request": "launch",
+            "mainClass": "com.hypixel.hytale.Main",
+            "projectName": "SimpleClaims",
+            "cwd": "${workspaceFolder}/run",
+            "args": "--allow-op --disable-sentry --assets=${env:APPDATA}/Hytale/install/release/package/game/latest/Assets.zip --mods=${workspaceFolder}/src/main --auth-mode=authenticated",
+            "vmArgs": "",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "HytaleServer (MacOS)",
+            "request": "launch",
+            "mainClass": "com.hypixel.hytale.Main",
+            "projectName": "SimpleClaims",
+            "cwd": "${workspaceFolder}/run",
+            "args": "--allow-op --disable-sentry --assets=${env:HOME}/Library/Application Support/Hytale/install/release/package/game/latest/Assets.zip --mods=${workspaceFolder}/src/main --auth-mode=authenticated",
+            "vmArgs": "",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "HytaleServer (Flatpak)",
+            "request": "launch",
+            "mainClass": "com.hypixel.hytale.Main",
+            "projectName": "SimpleClaims",
+            "cwd": "${workspaceFolder}/run",
+            "args": "--allow-op --disable-sentry --assets=${env:HOME}/.var/app/com.hypixel.HytaleLauncher/data/Hytale/install/release/package/game/latest/Assets.zip --mods=${workspaceFolder}/src/main --auth-mode=authenticated",
+            "vmArgs": "",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}

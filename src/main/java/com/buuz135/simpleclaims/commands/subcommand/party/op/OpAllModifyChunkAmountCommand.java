@@ -45,7 +45,7 @@ public class OpAllModifyChunkAmountCommand extends AbstractAsyncCommand {
                     if (playerRef != null) {
                         var selectedAmount = amount.get(commandContext);
                         ClaimManager.getInstance().getParties().values().forEach(party -> {
-                            party.setOverride(new PartyOverride(PartyOverrides.CLAIM_CHUNK_AMOUNT, new PartyOverride.PartyOverrideValue("integer", selectedAmount)));
+                            party.setOverride(new PartyOverride(PartyOverrides.CLAIM_CHUNK_BASE, new PartyOverride.PartyOverrideValue("integer", selectedAmount)));
                             ClaimManager.getInstance().saveParty(party);
                         });
                         player.sendMessage(CommandMessages.MODIFIED_MAX_CHUNK_AMOUNT.param("party_name", "all parties").param("amount", selectedAmount));

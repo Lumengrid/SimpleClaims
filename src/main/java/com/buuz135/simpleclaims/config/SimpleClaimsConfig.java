@@ -10,6 +10,8 @@ public class SimpleClaimsConfig {
     private int MaxPartyMembers = -1;
     private int MaxPartyAllies = -1;
     private int PartyInactivityHours = -1;
+    private boolean ScaleClaimLimitByMembers = false; // Scale claim limits by party member count
+    private boolean MIGRATION_MigrateOldClaimOverrides = true; // One-time migration: converts old CLAIM_CHUNK_AMOUNT to new base+bonus system
     private boolean NotifyPartyChatToggling = true;
     private boolean DefaultPartyBlockPlaceEnabled = false;
     private boolean DefaultPartyBlockBreakEnabled = false;
@@ -223,6 +225,14 @@ public class SimpleClaimsConfig {
 
     public boolean isNotifyPartyChatToggling() {
         return NotifyPartyChatToggling;
+    }
+
+    public boolean isScaleClaimLimitByMembers() {
+        return ScaleClaimLimitByMembers;
+    }
+
+    public boolean isMigrateOldClaimOverrides() {
+        return MIGRATION_MigrateOldClaimOverrides;
     }
 
     public boolean isEnableAdjacentChunkRestriction() {

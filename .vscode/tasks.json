@@ -1,0 +1,78 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "gradle: build",
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "build"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "gradle: shadowJar",
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "shadowJar"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "gradle: clean",
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "clean"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "gradle: cleanBuild",
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "clean",
+                "build"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Copy Dev Dependencies",
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "copyDevDependencies"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}
