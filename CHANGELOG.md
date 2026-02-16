@@ -5,6 +5,7 @@
 * Added a claiming restriction to only claim chunks if they aren't next to another claimed chunk from another party
 * Implement dynamic party claim limits based on member count, closes #173 closes #75 - KingJorjai
 * Updated to latest release, closes #200
+* Replaced the "Replace" interaction with a custom one to protect stuff like sickles from breaking crops
 
 # 1.0.28
 
