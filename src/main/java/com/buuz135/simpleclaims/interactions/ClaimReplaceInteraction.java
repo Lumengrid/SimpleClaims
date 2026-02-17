@@ -6,6 +6,7 @@ import com.buuz135.simpleclaims.claim.party.PartyOverrides;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.protocol.BlockPosition;
 import com.hypixel.hytale.protocol.InteractionState;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
@@ -13,7 +14,7 @@ import com.hypixel.hytale.server.core.entity.InteractionManager;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.none.ReplaceInteraction;
-import com.hypixel.hytale.server.core.modules.interaction.interaction.config.server.RefillContainerInteraction;
+
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +34,11 @@ public class ClaimReplaceInteraction extends ReplaceInteraction {
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockBreakEnabled;
         var targetBlock = context.getTargetBlock();
-        if (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.x, targetBlock.z, defaultInteract, PartyOverrides.PARTY_PROTECTION_BREAK_BLOCKS)) {
+        if (targetBlock == null && playerRef != null) {
+            var playerPos = playerRef.getTransform().getPosition();
+            targetBlock = new BlockPosition((int) playerPos.x, (int) playerPos.y, (int) playerPos.z);
+        }
+        if (playerRef != null && player != null && player.getWorld() != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.x, targetBlock.z, defaultInteract, PartyOverrides.PARTY_PROTECTION_BREAK_BLOCKS)) {
             super.tick0(firstRun, time, type, context, cooldownHandler);
         } else {
             context.getState().state = InteractionState.Failed;

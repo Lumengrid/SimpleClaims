@@ -1,3 +1,7 @@
+# 1.0.30
+
+* Added safety checks to the replace interaction
+
 # 1.0.29
 
 * Added PlaceholderAPI support - PiggyPiglet

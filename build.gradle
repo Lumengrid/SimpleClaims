@@ -65,7 +65,7 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation files(hytaleServerJar)
-    implementation(files(System.getProperty("user.home") + "/AppData/Roaming/Hytale/install/release/package/game/$game_build/Server/HytaleServer.jar"))
+    //implementation(files(System.getProperty("user.home") + "/AppData/Roaming/Hytale/install/release/package/game/$game_build/Server/HytaleServer.jar"))
     //implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
     shadowBundle files('libs/codeclib-1.1.0.jar')
     shadowBundle 'org.slf4j:slf4j-simple:2.0.17'
