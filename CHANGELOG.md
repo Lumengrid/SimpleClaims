@@ -1,6 +1,7 @@
 # 1.0.30
 
 * Added safety checks to the replace interaction
+* Fixed replace interaction cancelling more stuff than it should
 
 # 1.0.29
 

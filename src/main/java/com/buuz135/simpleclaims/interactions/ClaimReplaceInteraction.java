@@ -30,22 +30,27 @@ public class ClaimReplaceInteraction extends ReplaceInteraction {
     protected void tick0(boolean firstRun, float time, @NotNull InteractionType type, @NotNull InteractionContext context, @NotNull CooldownHandler cooldownHandler) {
         Ref<EntityStore> ref = context.getEntity();
         Store<EntityStore> store = ref.getStore();
-        Player player = store.getComponent(ref, Player.getComponentType());
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-        Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockBreakEnabled;
-        var targetBlock = context.getTargetBlock();
-        if (targetBlock == null && playerRef != null) {
-            var playerPos = playerRef.getTransform().getPosition();
-            targetBlock = new BlockPosition((int) playerPos.x, (int) playerPos.y, (int) playerPos.z);
-        }
-        if (playerRef != null && player != null && player.getWorld() != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.x, targetBlock.z, defaultInteract, PartyOverrides.PARTY_PROTECTION_BREAK_BLOCKS)) {
-            super.tick0(firstRun, time, type, context, cooldownHandler);
-        } else {
-            context.getState().state = InteractionState.Failed;
-            InteractionManager manager = context.getInteractionManager();
-            if (manager != null && context.getChain() != null) {
-                manager.cancelChains(context.getChain());
+        if (playerRef != null) {
+            Player player = store.getComponent(ref, Player.getComponentType());
+
+            Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockBreakEnabled;
+            var targetBlock = context.getTargetBlock();
+            if (targetBlock == null && playerRef != null) {
+                var playerPos = playerRef.getTransform().getPosition();
+                targetBlock = new BlockPosition((int) playerPos.x, (int) playerPos.y, (int) playerPos.z);
             }
+            if (player != null && player.getWorld() != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.x, targetBlock.z, defaultInteract, PartyOverrides.PARTY_PROTECTION_BREAK_BLOCKS)) {
+
+            } else {
+                context.getState().state = InteractionState.Failed;
+                InteractionManager manager = context.getInteractionManager();
+                if (manager != null && context.getChain() != null) {
+                    manager.cancelChains(context.getChain());
+                }
+            }
+        } else {
+            super.tick0(firstRun, time, type, context, cooldownHandler);
         }
     }
 
@@ -53,18 +58,27 @@ public class ClaimReplaceInteraction extends ReplaceInteraction {
     protected void simulateTick0(boolean firstRun, float time, @NotNull InteractionType type, @NotNull InteractionContext context, @NotNull CooldownHandler cooldownHandler) {
         Ref<EntityStore> ref = context.getEntity();
         Store<EntityStore> store = ref.getStore();
-        Player player = store.getComponent(ref, Player.getComponentType());
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-        Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockBreakEnabled;
-        var targetBlock = context.getTargetBlock();
-        if (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.x, targetBlock.z, defaultInteract, PartyOverrides.PARTY_PROTECTION_BREAK_BLOCKS)) {
-            super.simulateTick0(firstRun, time, type, context, cooldownHandler);
-        } else {
-            context.getState().state = InteractionState.Failed;
-            InteractionManager manager = context.getInteractionManager();
-            if (manager != null && context.getChain() != null) {
-                manager.cancelChains(context.getChain());
+        if (playerRef != null) {
+            Player player = store.getComponent(ref, Player.getComponentType());
+
+            Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockBreakEnabled;
+            var targetBlock = context.getTargetBlock();
+            if (targetBlock == null && playerRef != null) {
+                var playerPos = playerRef.getTransform().getPosition();
+                targetBlock = new BlockPosition((int) playerPos.x, (int) playerPos.y, (int) playerPos.z);
             }
+            if (player != null && player.getWorld() != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.x, targetBlock.z, defaultInteract, PartyOverrides.PARTY_PROTECTION_BREAK_BLOCKS)) {
+
+            } else {
+                context.getState().state = InteractionState.Failed;
+                InteractionManager manager = context.getInteractionManager();
+                if (manager != null && context.getChain() != null) {
+                    manager.cancelChains(context.getChain());
+                }
+            }
+        } else {
+            super.tick0(firstRun, time, type, context, cooldownHandler);
         }
     }
 }
