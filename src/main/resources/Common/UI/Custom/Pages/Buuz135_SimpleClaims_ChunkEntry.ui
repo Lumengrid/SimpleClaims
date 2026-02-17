@@ -13,4 +13,5 @@ TextButton {
     ),
     Sounds: $C.@ButtonSounds
   );
+  TextTooltipStyle: $C.@DefaultTextTooltipStyle;
 }
