@@ -205,12 +205,12 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                         uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].OutlineColor", ColorParseUtil.colorToHexAlpha(color));
                         uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].OutlineSize", 1);
                         var tooltip = MessageHelper.multiLine()
-                                .append(Message.translation("ui.ui.simpleclaims.chunk.owner").bold(true).color(hytaleGold))
+                                .append(Message.translation("ui.simpleclaims.chunk.owner").bold(true).color(hytaleGold))
                                 .append(Message.raw(partyInfo.getName())).nl()
-                                .append(Message.translation("ui.ui.simpleclaims.chunk.description").bold(true).color(hytaleGold))
+                                .append(Message.translation("ui.simpleclaims.chunk.description").bold(true).color(hytaleGold))
                                 .append(Message.raw(partyInfo.getDescription()));
                         if (playerParty != null && playerParty.getId().equals(partyInfo.getId()) && canPlayerClaim) {
-                            tooltip = tooltip.nl().nl().append(Message.translation("ui.ui.simpleclaims.chunk.rightClickUnclaim").bold(true).color(Color.RED.darker().darker()));
+                            tooltip = tooltip.nl().nl().append(Message.translation("ui.simpleclaims.chunk.rightClickUnclaim").bold(true).color(Color.RED.darker().darker()));
                         }
                         uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].TooltipTextSpans", tooltip.build());
                         if (canPlayerClaim)
@@ -218,10 +218,10 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                     } else { // The chunk doesnt have a valid party
                         var tooltip = MessageHelper.multiLine().append(Message.raw(Main.CONFIG.get().getWildernessName()).bold(true).color(Color.GREEN.darker()));
                         if (playerParty != null && canPlayerClaim) {
-                            tooltip = tooltip.nl().nl().append(Message.translation("ui.ui.simpleclaims.chunk.leftClickClaim").bold(true).color(Color.GRAY));
+                            tooltip = tooltip.nl().nl().append(Message.translation("ui.simpleclaims.chunk.leftClickClaim").bold(true).color(Color.GRAY));
                             uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ChunkCards[" + z + "][" + x + "]", EventData.of("Action", "LeftClicking:" + (chunkX + x - 8) + ":" + (chunkZ + z - 8)));
                         } else {
-                            tooltip = tooltip.nl().nl().append(Message.translation("ui.ui.simpleclaims.chunk.createPartyToClaim").bold(true).color(Color.GRAY));
+                            tooltip = tooltip.nl().nl().append(Message.translation("ui.simpleclaims.chunk.createPartyToClaim").bold(true).color(Color.GRAY));
                         }
                         uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].TooltipTextSpans", tooltip.build());
                     }
@@ -236,28 +236,28 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                         uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].OutlineColor", ColorParseUtil.colorToHexAlpha(color));
                         uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].OutlineSize", 1);
                         var tooltip = MessageHelper.multiLine()
-                                .append(Message.translation("ui.ui.simpleclaims.chunk.reservedBy").bold(true).color(hytaleGold))
+                                .append(Message.translation("ui.simpleclaims.chunk.reservedBy").bold(true).color(hytaleGold))
                                 .append(Message.raw(reservedPartyInfo.getName())).nl()
-                                .append(Message.translation("ui.ui.simpleclaims.chunk.perimeterInfo").italic(true).color(Color.GRAY));
+                                .append(Message.translation("ui.simpleclaims.chunk.perimeterInfo").italic(true).color(Color.GRAY));
                         if (playerParty != null && playerParty.getId().equals(reservedPartyInfo.getId())) {
-                            tooltip = tooltip.nl().append(Message.translation("ui.ui.simpleclaims.chunk.yourPerimeter").color(Color.GREEN.darker()));
+                            tooltip = tooltip.nl().append(Message.translation("ui.simpleclaims.chunk.yourPerimeter").color(Color.GREEN.darker()));
                             // Allow claiming own reserved chunks
                             if (canPlayerClaim) {
-                                tooltip = tooltip.nl().nl().append(Message.translation("ui.ui.simpleclaims.chunk.leftClickClaim").bold(true).color(Color.GRAY));
+                                tooltip = tooltip.nl().nl().append(Message.translation("ui.simpleclaims.chunk.leftClickClaim").bold(true).color(Color.GRAY));
                                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ChunkCards[" + z + "][" + x + "]", EventData.of("Action", "LeftClicking:" + (chunkX + x - 8) + ":" + (chunkZ + z - 8)));
                             }
                         } else {
-                            tooltip = tooltip.nl().append(Message.translation("ui.ui.simpleclaims.chunk.cannotClaim").bold(true).color(Color.RED.darker()));
+                            tooltip = tooltip.nl().append(Message.translation("ui.simpleclaims.chunk.cannotClaim").bold(true).color(Color.RED.darker()));
                         }
                         uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].TooltipTextSpans", tooltip.build());
                     }
                 } else {
                     var tooltip = MessageHelper.multiLine().append(Message.raw(Main.CONFIG.get().getWildernessName()).bold(true).color(Color.GREEN.darker()));
                     if (playerParty != null && canPlayerClaim) {
-                        tooltip = tooltip.nl().nl().append(Message.translation("ui.ui.simpleclaims.chunk.leftClickClaim").bold(true).color(Color.GRAY));
+                        tooltip = tooltip.nl().nl().append(Message.translation("ui.simpleclaims.chunk.leftClickClaim").bold(true).color(Color.GRAY));
                         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ChunkCards[" + z + "][" + x + "]", EventData.of("Action", "LeftClicking:" + (chunkX + x - 8) + ":" + (chunkZ + z - 8)));
                     } else {
-                        tooltip = tooltip.nl().nl().append(Message.translation("ui.ui.simpleclaims.chunk.createPartyToClaim").bold(true).color(Color.GRAY));
+                        tooltip = tooltip.nl().nl().append(Message.translation("ui.simpleclaims.chunk.createPartyToClaim").bold(true).color(Color.GRAY));
                     }
                     uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].TooltipTextSpans", tooltip.build());
                 }
